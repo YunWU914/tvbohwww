@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tbvoh — The Hub for Machinery Knowledge & Industry Growth</title>
+  <meta name="description" content="tbvoh — The machinery knowledge hub where engineers and manufacturers connect through technical expertise and industry intelligence." />
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="kicker">THE MACHINERY KNOWLEDGE NETWORK</div>
+        <h1 class="hero-title">
+          <span class="line-1">THE ENGINE</span>
+          <span class="line-2">OF INDUSTRY</span>
+          <span class="line-3"><em>KNOWLEDGE</em></span>
+        </h1>
+        <p class="hero-desc">
+          Where engineers and manufacturers connect through technical expertise and industry intelligence.
+        </p>
+
+        <div class="audience-tags">
+          <span class="tag">⚙️ Engineers</span>
+          <span class="tag">🏭 Manufacturers</span>
+        </div>
+
+        <div class="hero-actions">
+          <a href="https://forum.tbvoh.com/" class="btn btn-primary">
+            Request Access →
+          </a>
+        </div>
+
+        <div class="trust-line">
+          <span class="trust-dot"></span>
+          Early submissions get priority — first 10 members
+        </div>
+      </div>
+
+      <!-- Gear graphic: two meshing gears with holes -->
+      <div class="gear-link" aria-hidden="true">
+        <svg class="gear" viewBox="-20 -20 240 240" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gearGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#3a506b"/>
+              <stop offset="60%" stop-color="#2c3e50"/>
+              <stop offset="100%" stop-color="#1b2631"/>
+            </linearGradient>
+            <radialGradient id="gearShine" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#5dade2" stop-opacity="0.5"/>
+              <stop offset="60%" stop-color="#5dade2" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <!-- Big gear: 12 teeth -->
+          <g class="gear-spin">
+            <circle cx="75" cy="138" r="48" fill="url(#gearGrad)" stroke="#1a252f" stroke-width="1.5"/>
+            <g id="bigTeeth"></g>
+            <circle cx="75" cy="138" r="48" fill="url(#gearShine)"/>
+            <circle cx="75" cy="138" r="16" fill="#f5f7fa" stroke="#1a252f" stroke-width="1.5"/>
+          </g>
+          <!-- Small gear: 8 teeth -->
+          <g class="gear-spin-reverse">
+            <circle cx="135" cy="88" r="30" fill="url(#gearGrad)" stroke="#1a252f" stroke-width="1.5"/>
+            <g id="smallTeeth"></g>
+            <circle cx="135" cy="88" r="30" fill="url(#gearShine)"/>
+            <circle cx="135" cy="88" r="9" fill="#f5f7fa" stroke="#1a252f" stroke-width="1.5"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="container">
+      <div class="feature-grid">
+        <div class="feature-card" id="knowledge">
+          <div class="feature-icon">📚</div>
+          <h3>Practical Technical Knowledge</h3>
+          <p>Equipment selection, machining processes, and troubleshooting — real-world experience from working engineers, not textbook theory.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🚀</div>
+          <h3>Industry Exposure</h3>
+          <p>Get your technical capabilities and products discovered by precision buyers — trust and traffic built on professional content.</p>
+        </div>
+
+        <div class="feature-card" id="access">
+          <div class="feature-icon">🌐</div>
+          <h3>Supply-Demand Matching</h3>
+          <p>From technical questions to business connections — every engineering discussion can become a collaboration.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
