@@ -1,0 +1,83 @@
+# ===========================================================================
+# 发布品牌欢迎页（www.tbvoh.com 根路径）
+# ---------------------------------------------------------------------------
+# 为什么需要这个文件：
+#   仓库原本依赖 GitHub 自带的 pages-build-deployment（legacy 构建）。
+#   实测它只在 2026-08-04 跑过一次，之后 2026-10-26 的提（f09d583，
+#   把 Request Access 按钮改成 https://www.tbvoh.com/forum）推送后
+#   没有任何构建产生，线上一直是 8 月 4 日的旧文件 ——
+#   于是按钮仍指向早已不存在的 forum.tbvoh.com。
+#   原因通常是仓库 Pages 的发布来源被切成了「GitHub Actions」，
+#   而仓库里没有任何自定义工作流，于是 push 不再触发发布。
+#
+# 本工作流自适应两种设置：
+#   · Pages › Source = GitHub Actions  → 走官方 deploy-pages 部署
+#   · Pages › Source = Deploy from a branch → 调 API 触发一次构建
+# 所以不管当初被改成哪种，push 之后都会真的发布出去。
+#
+# 只发布静态文件：index.html / styles.css / script.js / favicon.svg / CNAME。
+# ===========================================================================
+name: Publish Welcome Page
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:      # 允许在 Actions 页面手动点一下重跑
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 探测 Pages 的发布来源
+        id: probe
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set +e
+          BUILD_TYPE=$(gh api "repos/${{ github.repository }}/pages" --jq '.build_type' 2>/dev/null)
+          echo "探测到 build_type=${BUILD_TYPE:-unknown}"
+          echo "build_type=${BUILD_TYPE:-unknown}" >> "$GITHUB_OUTPUT"
+
+      # --- 情况一：来源是「分支」→ 让 GitHub 自己重新构建 -------------------
+      - name: 触发分支构建（legacy）
+        if: steps.probe.outputs.build_type == 'legacy'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh api -X POST "repos/${{ github.repository }}/pages/builds" \
+            && echo "已触发 legacy 构建" || echo "触发失败（可能来源其实是 Actions）"
+
+      # --- 情况二：来源是「GitHub Actions」→ 自己上传并部署 ------------------
+      - name: 配置 Pages（Actions 来源）
+        if: steps.probe.outputs.build_type != 'legacy'
+        uses: actions/configure-pages@v5
+
+      - name: 打包静态文件
+        if: steps.probe.outputs.build_type != 'legacy'
+        run: |
+          # 只挑真正的站点文件，避免把 .github/、README 也发布到公网路径下
+          mkdir -p _site
+          cp index.html styles.css script.js favicon.svg CNAME _site/
+
+      - name: 上传构建产物
+        if: steps.probe.outputs.build_type != 'legacy'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: 部署
+        if: steps.probe.outputs.build_type != 'legacy'
+        id: deployment
+        uses: actions/deploy-pages@v4
