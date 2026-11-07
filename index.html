@@ -374,6 +374,55 @@
         font-size: 12px; font-weight: 800; margin-top: 1px;
     }
 
+    /* ===== FAQ ===== */
+    .faq-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        align-items: start;
+    }
+    .faq-item {
+        background: var(--panel);
+        border: 1px solid var(--line-soft);
+        border-radius: 12px;
+        padding: 0 22px;
+        transition: border-color .2s, background .2s;
+    }
+    .faq-item:hover { border-color: rgba(93,164,224,.42); }
+    .faq-item[open] { background: var(--panel-hi); border-color: rgba(93,164,224,.42); }
+
+    .faq-item summary {
+        list-style: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 0;
+        font-size: 15px;
+        font-weight: 600;
+        color: #fff;
+        line-height: 1.45;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after {
+        content: '+';
+        flex-shrink: 0;
+        color: var(--accent);
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 1;
+        transition: transform .2s;
+    }
+    .faq-item[open] summary::after { content: '−'; }
+
+    .faq-a {
+        padding: 0 0 18px;
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.65;
+    }
+
     /* ===== Footer ===== */
     footer {
         margin-top: auto;
@@ -417,6 +466,7 @@
         .ann-item { gap: 14px; padding: 18px; }
         .ann-date { width: 48px; }
         .sec-head-row .side-link { display: none; }
+        .faq-grid { grid-template-columns: 1fr; }
     }
 </style>
 </head>
@@ -644,6 +694,58 @@
                 <p class="inside-item"><span class="tick">✓</span> Manufacturers can publish technical &amp; product write-ups in any machinery board</p>
                 <p class="inside-item"><span class="tick">✓</span> Raise questions, share solutions and build industry connections</p>
             </div>
+        </div>
+    <!-- ============ FAQ ============ -->
+    <section class="section container" id="faq" aria-labelledby="faq-title">
+        <div class="sec-head-row">
+            <div>
+                <h2 id="faq-title">Frequently asked questions</h2>
+                <p class="panel-sub">What engineers and manufacturers usually ask before joining.</p>
+            </div>
+        </div>
+
+        <div class="faq-grid">
+            <details class="faq-item">
+                <summary>What is this website for?</summary>
+                <div class="faq-a">
+                    <p>A vertical community focused on industrial equipment and intelligent manufacturing. Manufacturers publish product introductions and technical content for free, while industry professionals discuss openly. Everything is open to search engines — well-structured technical content can be picked up by AI assistants, so when a potential customer asks for equipment selection advice or a supplier recommendation, you may be the one suggested.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>Does it cost anything to publish products?</summary>
+                <div class="faq-a">
+                    <p>Completely free — product listings, detail pages and technical discussions all cost nothing. The platform does not make money from bidding or paid ranking. The only requirement is content quality: submissions are reviewed, and thin or mass-generated articles are turned down.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>How is this different from traditional B2B platforms?</summary>
+                <div class="faq-a">
+                    <p>Traditional platforms compete on ad budget — bidding, premium placement and annual fees stacking up, with noisy traffic and unreliable enquiries. Here traffic compounds through content: the more solid and well-structured your technical writing, the longer it keeps working for you, and the people who arrive already know what they need. Manufacturer storefront links are coming next, so customers can reach you directly.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>Who should join?</summary>
+                <div class="faq-a">
+                    <p>Equipment manufacturers, industrial designers, engineers — and anyone who needs to compare equipment or source suppliers. Small and mid-sized manufacturers with real technical depth are especially welcome: the ones usually drowned out by ad budgets elsewhere.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>I'm a designer or engineer, not a manufacturer. Can I join?</summary>
+                <div class="faq-a">
+                    <p>Absolutely. Show your designs and proposals, join technical discussions, and connect with manufacturing resources. If you are looking for a design partner or a supplier, this is also where you will find the right people.</p>
+                </div>
+            </details>
+
+            <details class="faq-item">
+                <summary>What kind of customers does the community bring?</summary>
+                <div class="faq-a">
+                    <p>People who arrive through AI answers and active search are usually already comparing options and know their requirement — for example, asking directly which equipment suits a given working condition. That intent is far more precise than generic traffic, and wasted enquiries drop sharply.</p>
+                </div>
+            </details>
         </div>
     </section>
 </main>
