@@ -1,105 +1,698 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>tbvoh — The Hub for Machinery Knowledge &amp; Industry Growth</title>
-  <meta name="description" content="tbvoh — The machinery knowledge hub where engineers and manufacturers connect through technical expertise and industry intelligence." />
-  <link rel="canonical" href="https://www.tbvoh.com/" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="styles.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ===== SEO / GEO ===== -->
+<link rel="canonical" href="https://www.tbvoh.com/forum">
+<meta name="robots" content="noindex,follow">
+<meta name="description" content="An industrial community for engineers and manufacturers. Join technical discussions, read and publish manufacturer technical & product articles.">
+<title>tbvoh — Community for Engineers & Manufacturers</title>
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "tbvoh — The Machinery Knowledge Network",
+  "description": "Industrial community for engineers and manufacturers for technical discussion and manufacturer technical articles sharing.",
+  "url": "https://www.tbvoh.com/forum"
+}
+</script>
+
+<!--
+    版权合规说明：
+    1. 字体：仅使用各操作系统自带系统字体栈（-apple-system / Segoe UI / Roboto 等），
+       未引入任何 Google Fonts / 商业字体，无字体授权风险；
+    2. 图形：全部为手写内联 SVG 与 CSS，未使用任何第三方图库、图片、图标库素材；
+    3. 本页面无任何外部资源请求（0 external requests）。
+-->
+<style>
+    /* ==========================================================
+       Design System — tbvoh（与论坛内部同色系：深海军蓝 + 浅蓝）
+       ========================================================== */
+    :root {
+        --bg-deep: #0d1f33;          /* 页面最深底色 */
+        --bg: #12283f;               /* 页面主底色（论坛同款海军蓝） */
+        --panel: #17334e;            /* 卡片/面板底色 */
+        --panel-hi: #1c3d5c;         /* 面板 hover / 高亮 */
+        --line: #274664;             /* 描边 */
+        --line-soft: #20405e;
+
+        --accent: #5da4e0;           /* 品牌浅蓝（logo "voh" 同色系） */
+        --accent-hi: #7fbcf0;        /* 亮蓝 hover */
+        --accent-dim: rgba(93,164,224,.14);
+
+        --text: #e8eff7;             /* 主文本 */
+        --text-soft: #b9cbdd;        /* 次级文本 */
+        --muted: #8aa3bc;            /* 弱文本 */
+
+        --radius: 14px;
+        --shadow-sm: 0 2px 8px rgba(4,14,26,.35);
+        --shadow-md: 0 16px 40px -14px rgba(4,14,26,.6);
+        --container: 1160px;
+        --pad: clamp(20px, 4.5vw, 48px);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        background:
+            radial-gradient(1000px 520px at 80% -12%, rgba(93,164,224,.12), transparent 60%),
+            radial-gradient(760px 460px at -8% 40%, rgba(93,164,224,.06), transparent 55%),
+            linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        line-height: 1.65;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: var(--container); margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); width: 100%; }
+
+    /* ===== Top Bar（论坛同款深色导航） ===== */
+    .topbar {
+        padding: 18px 0;
+        background: var(--panel);
+        border-bottom: 1px solid var(--line-soft);
+    }
+    .topbar-inner { display: flex; align-items: center; justify-content: space-between; }
+
+    /* 品牌字标：tb(白) + voh(浅蓝)，与论坛内部一致 */
+    .brand-logo {
+        font-size: 22px; font-weight: 800; letter-spacing: -.3px;
+        color: #fff; line-height: 1;
+    }
+    .brand-logo .hl { color: var(--accent); }
+    .brand-wrap { display: flex; align-items: center; gap: 10px; }
+
+    .topbar-cta {
+        font-size: 13.5px; font-weight: 600; color: var(--accent);
+        padding: 8px 18px; border: 1px solid rgba(93,164,224,.4); border-radius: 999px;
+        background: transparent; transition: all .2s;
+    }
+    .topbar-cta:hover { background: var(--accent-dim); border-color: var(--accent); }
+
+    /* ===== Hero ===== */
+    .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr);
+        align-items: center;
+        gap: clamp(36px, 5vw, 72px);
+        padding-top: clamp(36px, 6vh, 64px);
+        padding-bottom: clamp(56px, 9vh, 96px);
+    }
+
+    .eyebrow {
+        display: inline-flex; align-items: center; gap: 8px;
+        font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase;
+        color: var(--accent); background: var(--accent-dim);
+        border: 1px solid rgba(93,164,224,.35); border-radius: 999px;
+        padding: 7px 16px; margin-bottom: 26px;
+    }
+    .eyebrow::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 8px rgba(93,164,224,.8); }
+
+    h1 {
+        font-size: clamp(38px, 4.6vw, 62px);
+        line-height: 1.08; font-weight: 800;
+        color: #fff; letter-spacing: -1.2px;
+        margin-bottom: 22px;
+    }
+    h1 .line2 { color: var(--accent); }
+    h1 .line3 { color: var(--accent-hi); font-style: italic; }
+
+    .hero-sub {
+        font-size: clamp(15px, 1.4vw, 17px);
+        color: var(--text-soft); max-width: 540px;
+        margin-bottom: 30px;
+    }
+
+    .role-label { font-size: 13px; font-weight: 600; color: var(--muted); margin-bottom: 10px; letter-spacing: .3px; }
+
+    .role-tags { display: flex; gap: 10px; margin-bottom: 32px; flex-wrap: wrap; }
+
+    .role-tag {
+        display: inline-flex; align-items: center; gap: 9px;
+        background: var(--panel); border: 1.5px solid var(--line);
+        border-radius: 999px; padding: 10px 20px;
+        font-size: 14px; font-weight: 600; color: var(--text-soft);
+        cursor: pointer; transition: all .2s;
+    }
+    .role-tag svg { width: 16px; height: 16px; opacity: .75; }
+    .role-tag:hover { border-color: var(--accent); color: var(--accent-hi); transform: translateY(-1px); }
+    .role-tag.active {
+        border-color: var(--accent); color: var(--accent-hi);
+        background: var(--accent-dim);
+        box-shadow: 0 4px 16px -4px rgba(93,164,224,.35);
+    }
+    .role-tag.active svg { opacity: 1; }
+
+    .cta-row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; }
+
+    .btn-enter {
+        display: inline-flex; align-items: center; gap: 10px;
+        background: linear-gradient(140deg, var(--accent-hi), var(--accent) 60%, #3f86c8);
+        color: #0d1f33; font-size: 15.5px; font-weight: 800;
+        padding: 16px 34px; border-radius: 12px;
+        box-shadow: 0 8px 24px -6px rgba(93,164,224,.5);
+        transition: all .2s;
+    }
+    .btn-enter svg { width: 17px; height: 17px; transition: transform .2s; }
+    .btn-enter:hover { transform: translateY(-2px); box-shadow: 0 12px 30px -6px rgba(93,164,224,.6); filter: brightness(1.06); }
+    .btn-enter:hover svg { transform: translateX(3px); }
+    .btn-enter:active { transform: translateY(0); }
+
+    .scarcity { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--muted); }
+    .scarcity::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); flex-shrink: 0; box-shadow: 0 0 0 3px rgba(93,164,224,.15); }
+
+    /* ===== Hero Visual ===== */
+    .hero-art { position: relative; display: grid; place-items: center; min-height: 300px; }
+
+    .hero-art svg.main { width: min(100%, 420px); height: auto; }
+
+    .float-chip {
+        position: absolute;
+        display: flex; align-items: center; gap: 9px;
+        background: rgba(23,51,78,.9);
+        backdrop-filter: blur(6px);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 10px 15px;
+        font-size: 12.5px; font-weight: 600; color: var(--text-soft);
+        box-shadow: var(--shadow-md);
+        animation: floaty 5s ease-in-out infinite;
+    }
+    .float-chip .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .chip-1 { top: 8%; left: 2%; }
+    .chip-1 .dot { background: #4ade80; }
+    .chip-2 { bottom: 10%; right: 0%; animation-delay: -2.5s; }
+    .chip-2 .dot { background: var(--accent); }
+
+    @keyframes floaty {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-9px); }
+    }
+
+    /* 齿轮旋转：外层 g 定位（attribute transform），内层 g 动画（CSS transform），互不覆盖 */
+    .spin-slow  { animation: spin 30s linear infinite; }
+    .spin-rev   { animation: spin 22s linear infinite reverse; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (prefers-reduced-motion: reduce) {
+        .spin-slow, .spin-rev, .float-chip { animation: none; }
+    }
+
+    /* ===== Section 通用 ===== */
+    .section { padding-bottom: clamp(56px, 9vh, 96px); }
+
+    .section-head { text-align: center; max-width: 620px; margin: 0 auto clamp(30px, 5vh, 48px); }
+    .section-head h2 {
+        font-size: clamp(24px, 2.6vw, 32px); font-weight: 800;
+        color: #fff; letter-spacing: -.4px; margin-bottom: 10px;
+    }
+    .section-head p { font-size: 15px; color: var(--muted); }
+
+    /* ===== Value Cards ===== */
+    .values-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: clamp(16px, 2.4vw, 26px);
+    }
+
+    .value-card {
+        background: var(--panel);
+        border: 1px solid var(--line-soft);
+        border-radius: var(--radius);
+        padding: clamp(24px, 3vw, 34px) clamp(22px, 2.6vw, 30px);
+        box-shadow: var(--shadow-sm);
+        transition: transform .25s, box-shadow .25s, border-color .25s, background .25s;
+    }
+    .value-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); border-color: rgba(93,164,224,.5); background: var(--panel-hi); }
+
+    .icon-chip {
+        width: 48px; height: 48px; border-radius: 13px;
+        display: grid; place-items: center;
+        font-size: 22px; margin-bottom: 20px;
+        background: var(--accent-dim);
+        border: 1px solid rgba(93,164,224,.3);
+    }
+    .value-card h3 { font-size: 16.5px; font-weight: 700; color: #fff; margin-bottom: 9px; }
+    .value-card p { font-size: 14px; color: var(--muted); }
+
+    /* ==========================================================
+       Announcement 公告区
+       维护方式：
+       1) 紧急公告条：把 .announce-strip 上的 hidden 去掉即可显示；
+       2) 常规公告：在 .ann-list 内按 article 结构增删条目；
+       3) 整个公告区不需要时：给 <section id="announcements"> 加 hidden 属性。
+       ========================================================== */
+
+    /* 顶部紧急公告条 */
+    .announce-strip {
+        background: linear-gradient(90deg, #1b3f61, #21486c);
+        border-bottom: 1px solid var(--line);
+        padding: 11px 0;
+        font-size: 13.5px;
+        color: var(--text-soft);
+    }
+    .announce-strip .strip-inner { display: flex; align-items: center; gap: 12px; }
+    .announce-strip .tag {
+        flex-shrink: 0;
+        background: var(--accent); color: #0d1f33;
+        font-size: 11px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase;
+        padding: 3px 9px; border-radius: 5px;
+    }
+    .announce-strip .txt { flex: 1; min-width: 0; }
+    .announce-strip .txt b { color: #fff; font-weight: 700; }
+    .announce-strip a { color: var(--accent-hi); font-weight: 600; white-space: nowrap; }
+    .announce-strip a:hover { text-decoration: underline; }
+    .announce-strip .close {
+        flex-shrink: 0; background: none; border: none; cursor: pointer;
+        color: var(--muted); font-size: 18px; line-height: 1; padding: 2px 6px; border-radius: 6px;
+    }
+    .announce-strip .close:hover { color: #fff; background: rgba(255,255,255,.08); }
+
+    [hidden] { display: none !important; }
+
+    /* 公告列表 */
+    .sec-head-row {
+        display: flex; align-items: flex-end; justify-content: space-between;
+        gap: 16px; margin-bottom: 26px; flex-wrap: wrap;
+    }
+    .sec-head-row h2 {
+        font-size: clamp(22px, 2.4vw, 30px); font-weight: 800;
+        color: #fff; letter-spacing: -.4px; margin-bottom: 6px;
+    }
+    .sec-head-row .panel-sub { font-size: 14.5px; color: var(--muted); }
+    .sec-head-row .side-link { font-size: 13.5px; font-weight: 600; color: var(--accent); white-space: nowrap; }
+    .sec-head-row .side-link:hover { color: var(--accent-hi); text-decoration: underline; }
+
+    .ann-list { display: flex; flex-direction: column; gap: 12px; }
+
+    .ann-item {
+        display: flex; gap: 18px; align-items: flex-start;
+        background: var(--panel);
+        border: 1px solid var(--line-soft);
+        border-radius: var(--radius);
+        padding: 20px 24px;
+        box-shadow: var(--shadow-sm);
+        transition: transform .2s, border-color .2s, background .2s;
+    }
+    .ann-item:hover { transform: translateY(-3px); border-color: rgba(93,164,224,.45); background: var(--panel-hi); }
+
+    /* 置顶公告：左侧蓝色竖线标识 */
+    .ann-item.pinned { border-left: 3px solid var(--accent); }
+
+    .ann-date {
+        flex-shrink: 0; width: 56px; text-align: center;
+        background: var(--accent-dim);
+        border: 1px solid rgba(93,164,224,.28);
+        border-radius: 10px; padding: 8px 0;
+    }
+    .ann-date .d { display: block; font-size: 19px; font-weight: 800; color: #fff; line-height: 1.1; }
+    .ann-date .m { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--accent); }
+
+    .ann-body { min-width: 0; }
+    .ann-body h3 {
+        font-size: 16px; font-weight: 700; color: #fff;
+        margin-bottom: 6px; display: flex; align-items: center; gap: 9px; flex-wrap: wrap;
+    }
+    .ann-body p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+    .ann-body a { color: var(--accent); font-weight: 600; }
+    .ann-body a:hover { text-decoration: underline; }
+
+    .badge-new {
+        background: var(--accent); color: #0d1f33;
+        font-size: 10.5px; font-weight: 800; letter-spacing: .8px;
+        padding: 2px 8px; border-radius: 5px; text-transform: uppercase;
+    }
+    .badge-pin {
+        background: rgba(255,255,255,.1); color: var(--accent-hi);
+        font-size: 10.5px; font-weight: 700; letter-spacing: .6px;
+        padding: 2px 8px; border-radius: 5px; text-transform: uppercase;
+        border: 1px solid rgba(93,164,224,.35);
+    }
+
+    /* ===== Inside Community ===== */
+    .inside-panel {
+        background:
+            radial-gradient(600px 300px at 90% -20%, rgba(93,164,224,.22), transparent 60%),
+            linear-gradient(150deg, #1a3a58, #122a42);
+        border: 1px solid var(--line-soft);
+        border-radius: 20px;
+        padding: clamp(32px, 5vw, 56px);
+        color: #fff;
+        box-shadow: var(--shadow-md);
+    }
+    .inside-panel h2 {
+        font-size: clamp(21px, 2.4vw, 28px); font-weight: 800;
+        margin-bottom: 8px; letter-spacing: -.3px;
+    }
+    .inside-panel .panel-sub { font-size: 14.5px; color: var(--muted); margin-bottom: 30px; }
+
+    .inside-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px clamp(24px, 4vw, 48px); }
+
+    .inside-item {
+        display: flex; align-items: flex-start; gap: 13px;
+        background: rgba(255,255,255,.045);
+        border: 1px solid rgba(255,255,255,.08);
+        border-radius: 12px;
+        padding: 15px 17px;
+        font-size: 14.5px; color: var(--text-soft); line-height: 1.55;
+        transition: background .2s;
+    }
+    .inside-item:hover { background: rgba(255,255,255,.085); }
+    .inside-item .tick {
+        width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+        background: var(--accent-dim); color: var(--accent-hi);
+        display: grid; place-items: center;
+        font-size: 12px; font-weight: 800; margin-top: 1px;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+        margin-top: auto;
+        border-top: 1px solid var(--line-soft);
+        background: var(--panel);
+        padding: 26px var(--pad);
+    }
+    .footer-inner {
+        max-width: var(--container); margin: 0 auto;
+        display: flex; align-items: center; justify-content: space-between;
+        gap: 14px; flex-wrap: wrap;
+    }
+    .f-brand { font-size: 12px; font-weight: 800; letter-spacing: 2px; color: var(--text-soft); text-transform: uppercase; }
+    .f-brand .hl { color: var(--accent); }
+    .f-legal { font-size: 12.5px; color: var(--muted); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .f-legal a { transition: color .15s; }
+    .f-legal a:hover { color: var(--accent); text-decoration: underline; }
+    .f-legal .sep { color: var(--line); }
+
+    /* ==========================================================
+       Responsive — Tablet / Mobile
+       ========================================================== */
+    @media (max-width: 1024px) {
+        .hero { grid-template-columns: 1fr; gap: 44px; }
+        .hero-art { order: -1; min-height: 0; }
+        .hero-art svg.main { width: min(72vw, 340px); }
+        .chip-1 { top: 2%; left: 6%; }
+        .chip-2 { bottom: 2%; right: 6%; }
+        .values-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 700px) {
+        .values-grid { grid-template-columns: 1fr; }
+        .inside-grid { grid-template-columns: 1fr; }
+        .topbar-cta { display: none; }
+        .hero { padding-top: 20px; }
+        .role-tags .role-tag { flex: 1; justify-content: center; }
+        .cta-row .btn-enter { width: 100%; justify-content: center; }
+        .scarcity { justify-content: center; width: 100%; }
+        .footer-inner { flex-direction: column; text-align: center; }
+        .ann-item { gap: 14px; padding: 18px; }
+        .ann-date { width: 48px; }
+        .sec-head-row .side-link { display: none; }
+    }
+</style>
 </head>
 <body>
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-text">
-        <div class="kicker">THE MACHINERY KNOWLEDGE NETWORK</div>
-        <h1 class="hero-title">
-          <span class="line-1">THE ENGINE</span>
-          <span class="line-2">OF INDUSTRY</span>
-          <span class="line-3"><em>KNOWLEDGE</em></span>
-        </h1>
-        <p class="hero-desc">
-          Where engineers and manufacturers connect through technical expertise and industry intelligence.
-        </p>
 
-        <div class="audience-tags">
-          <span class="tag">⚙️ Engineers</span>
-          <span class="tag">🏭 Manufacturers</span>
+<!-- ============ Top Bar ============ -->
+<div class="topbar">
+    <div class="container topbar-inner">
+        <div class="brand-wrap">
+            <span class="brand-logo">tb<span class="hl">voh</span></span>
         </div>
-
-        <div class="hero-actions">
-          <a href="https://www.tbvoh.com/forum" class="btn btn-primary">
-            Request Access →
-          </a>
-        </div>
-
-        <div class="trust-line">
-          <span class="trust-dot"></span>
-          Early submissions get priority — first 10 members
-        </div>
-      </div>
-
-      <!-- Gear graphic: two meshing gears with holes -->
-      <div class="gear-link" aria-hidden="true">
-        <svg class="gear" viewBox="-20 -20 240 240" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="gearGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stop-color="#3a506b"/>
-              <stop offset="60%" stop-color="#2c3e50"/>
-              <stop offset="100%" stop-color="#1b2631"/>
-            </linearGradient>
-            <radialGradient id="gearShine" cx="35%" cy="35%" r="65%">
-              <stop offset="0%" stop-color="#5dade2" stop-opacity="0.5"/>
-              <stop offset="60%" stop-color="#5dade2" stop-opacity="0"/>
-            </radialGradient>
-          </defs>
-          <!-- Big gear: 12 teeth -->
-          <g class="gear-spin">
-            <circle cx="75" cy="138" r="48" fill="url(#gearGrad)" stroke="#1a252f" stroke-width="1.5"/>
-            <g id="bigTeeth"></g>
-            <circle cx="75" cy="138" r="48" fill="url(#gearShine)"/>
-            <circle cx="75" cy="138" r="16" fill="#f5f7fa" stroke="#1a252f" stroke-width="1.5"/>
-          </g>
-          <!-- Small gear: 8 teeth -->
-          <g class="gear-spin-reverse">
-            <circle cx="135" cy="88" r="30" fill="url(#gearGrad)" stroke="#1a252f" stroke-width="1.5"/>
-            <g id="smallTeeth"></g>
-            <circle cx="135" cy="88" r="30" fill="url(#gearShine)"/>
-            <circle cx="135" cy="88" r="9" fill="#f5f7fa" stroke="#1a252f" stroke-width="1.5"/>
-          </g>
-        </svg>
-      </div>
+        <a class="topbar-cta" href="https://www.tbvoh.com/forum">Enter Community →</a>
     </div>
-  </section>
+</div>
 
-  <!-- FEATURES -->
-  <section class="features">
-    <div class="container">
-      <div class="feature-grid">
-        <div class="feature-card" id="knowledge">
-          <div class="feature-icon">📚</div>
-          <h3>Practical Technical Knowledge</h3>
-          <p>Equipment selection, machining processes, and troubleshooting — real-world experience from working engineers, not textbook theory.</p>
-        </div>
-
-        <div class="feature-card">
-          <div class="feature-icon">🚀</div>
-          <h3>Industry Exposure</h3>
-          <p>Get your technical capabilities and products discovered by precision buyers — trust and traffic built on professional content.</p>
-        </div>
-
-        <div class="feature-card" id="access">
-          <div class="feature-icon">🌐</div>
-          <h3>Supply-Demand Matching</h3>
-          <p>From technical questions to business connections — every engineering discussion can become a collaboration.</p>
-        </div>
-      </div>
+<!-- ============ 顶部紧急公告条 ============
+     使用方法：需要发紧急公告时，把下面这行的 hidden 删掉并改文案即可；
+     用户关闭后 7 天内不再显示（按 data-key 区分不同公告）。 -->
+<!-- <div class="announce-strip" id="annStrip" data-key="2026-10-27" hidden> -->
+<div class="announce-strip" id="annStrip" data-key="2026-10-27" hidden>
+    <div class="container strip-inner">
+        <span class="tag">Notice</span>
+        <span class="txt"><b>Community maintenance window:</b> scheduled this Sunday 02:00–04:00 (GMT+8).</span>
+        <a href="https://www.tbvoh.com/forum">Details →</a>
+        <button type="button" class="close" aria-label="Close announcement">×</button>
     </div>
-  </section>
+</div>
 
-  <script src="script.js"></script>
+<main>
+    <!-- ============ Hero ============ -->
+    <section class="hero container">
+        <div class="hero-left">
+            <span class="eyebrow">For Engineers &amp; Manufacturers</span>
+
+            <!-- 页面唯一 H1 -->
+            <h1>
+                The Engine
+                <span class="line2">of Industry</span>
+                <span class="line3">Knowledge</span>
+            </h1>
+
+            <p class="hero-sub">
+                Where engineers and manufacturers connect through technical expertise and
+                industry intelligence. A community for technical discussions, troubleshooting
+                and manufacturer&#8209;shared technical articles.
+            </p>
+
+            <p class="role-label">I am joining as —</p>
+            <div class="role-tags" role="group" aria-label="Choose your role">
+                <button type="button" class="role-tag active" data-role="engineer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+                    Engineers
+                </button>
+                <button type="button" class="role-tag" data-role="manufacturer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21V9l6 4V9l6 4V5h6v16z"/><path d="M17 21v-4"/></svg>
+                    Manufacturers
+                </button>
+            </div>
+
+            <div class="cta-row">
+                <a id="enterBtn" class="btn-enter"
+                   href="https://www.tbvoh.com/forum"
+                   aria-label="Click to enter the machinery industry knowledge community forum for technical discussion and manufacturer articles">
+                    Enter Community
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+                </a>
+                <span class="scarcity">Early members get priority placement — limited initial spots</span>
+            </div>
+        </div>
+
+        <!-- 齿轮主视觉：语义描述在 HTML 文本中，利于 GEO 抓取 -->
+        <div class="hero-art">
+            <svg class="main" viewBox="0 0 420 360" role="img"
+                 aria-label="Industry knowledge network, machinery engineering community for engineers and manufacturers">
+                <defs>
+                    <linearGradient id="gNavy" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#2a4f75"/>
+                        <stop offset="100%" stop-color="#16334f"/>
+                    </linearGradient>
+                    <linearGradient id="gBlue" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#7fbcf0"/>
+                        <stop offset="100%" stop-color="#3f86c8"/>
+                    </linearGradient>
+                    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+                        <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#04101f" flood-opacity="0.5"/>
+                    </filter>
+                </defs>
+
+                <!-- 轨道虚线环 -->
+                <circle cx="210" cy="180" r="158" fill="none" stroke="#2c507280" stroke-width="1.6" stroke-dasharray="3 9"/>
+                <circle cx="210" cy="180" r="112" fill="none" stroke="#2c507260" stroke-width="1.4" stroke-dasharray="2 8"/>
+
+                <!-- 网络节点：知识连接的隐喻 -->
+                <g fill="#5da4e0">
+                    <circle cx="210" cy="22" r="5"/>
+                    <circle cx="368" cy="180" r="4" opacity=".65"/>
+                    <circle cx="52" cy="180" r="4" opacity=".65"/>
+                    <circle cx="210" cy="338" r="5" opacity=".8"/>
+                </g>
+                <g stroke="#2c5072" stroke-width="1.4">
+                    <line x1="210" y1="27" x2="210" y2="70"/>
+                    <line x1="363" y1="180" x2="330" y2="180"/>
+                    <line x1="57" y1="180" x2="90" y2="180"/>
+                </g>
+
+                <!-- 大齿轮 -->
+                <g transform="translate(160,215)" filter="url(#soft)">
+                    <g class="spin-slow">
+                        <g fill="#16334f" stroke="#2c5072" stroke-width="1">
+                            <rect x="-13" y="-136" width="26" height="34" rx="7"/>
+                            <rect x="-13" y="102" width="26" height="34" rx="7"/>
+                            <rect x="-136" y="-13" width="34" height="26" rx="7"/>
+                            <rect x="102" y="-13" width="34" height="26" rx="7"/>
+                            <rect x="-13" y="-136" width="26" height="34" rx="7" transform="rotate(45)"/>
+                            <rect x="-13" y="102" width="26" height="34" rx="7" transform="rotate(45)"/>
+                            <rect x="-136" y="-13" width="34" height="26" rx="7" transform="rotate(45)"/>
+                            <rect x="102" y="-13" width="34" height="26" rx="7" transform="rotate(45)"/>
+                        </g>
+                        <circle r="112" fill="url(#gNavy)" stroke="#2c5072" stroke-width="1"/>
+                        <circle r="76" fill="none" stroke="#ffffff" stroke-width="1.6" opacity=".1"/>
+                        <circle r="40" fill="#12283f"/>
+                        <circle r="24" fill="none" stroke="#5da4e0" stroke-width="7"/>
+                    </g>
+                </g>
+
+                <!-- 小齿轮 -->
+                <g transform="translate(318,96)">
+                    <g class="spin-rev">
+                        <g fill="#3f86c8">
+                            <rect x="-9" y="-88" width="18" height="24" rx="5"/>
+                            <rect x="-9" y="64" width="18" height="24" rx="5"/>
+                            <rect x="-88" y="-9" width="24" height="18" rx="5"/>
+                            <rect x="64" y="-9" width="24" height="18" rx="5"/>
+                            <rect x="-9" y="-88" width="18" height="24" rx="5" transform="rotate(45)"/>
+                            <rect x="-9" y="64" width="18" height="24" rx="5" transform="rotate(45)"/>
+                            <rect x="-88" y="-9" width="24" height="18" rx="5" transform="rotate(45)"/>
+                            <rect x="64" y="-9" width="24" height="18" rx="5" transform="rotate(45)"/>
+                        </g>
+                        <circle r="74" fill="url(#gBlue)"/>
+                        <circle r="50" fill="none" stroke="#ffffff" stroke-width="1.4" opacity=".22"/>
+                        <circle r="26" fill="#12283f"/>
+                        <circle r="15" fill="none" stroke="#5da4e0" stroke-width="5"/>
+                    </g>
+                </g>
+            </svg>
+
+            <!-- 浮动小卡：占位文案，冷启动阶段可直接删除这两行 -->
+            <div class="float-chip chip-1"><span class="dot"></span> 128 discussions this week</div>
+            <div class="float-chip chip-2"><span class="dot"></span> New technical articles daily</div>
+        </div>
+    </section>
+
+    <!-- ============ 公告区 Announcements ============ -->
+    <section class="section container" id="announcements" aria-labelledby="ann-title">
+        <div class="sec-head-row">
+            <div>
+                <h2 id="ann-title">Announcements</h2>
+                <p class="panel-sub">Latest updates from the community team.</p>
+            </div>
+            <a class="side-link" href="https://www.tbvoh.com/forum">View all →</a>
+        </div>
+
+        <div class="ann-list">
+            <!-- 置顶公告：加 pinned 类 + Pinned 徽章，建议长期保留 1 条 -->
+            <article class="ann-item pinned">
+                <div class="ann-date"><span class="d">27</span><span class="m">OCT</span></div>
+                <div class="ann-body">
+                    <h3>Welcome to the tbvoh community <span class="badge-new">New</span> <span class="badge-pin">Pinned</span></h3>
+                    <p>Pick a machinery board, start a discussion or share your first write-up — early members get priority placement on the community homepage.</p>
+                </div>
+            </article>
+
+            <!-- 普通公告：按下面这个结构复制粘贴即可增删（最新的放最上面） -->
+            <article class="ann-item">
+                <div class="ann-date"><span class="d">20</span><span class="m">OCT</span></div>
+                <div class="ann-body">
+                    <h3>Manufacturers: share your expertise as a post</h3>
+                    <p>Real case studies, application guides and technical write-ups are welcome in every machinery board. Please read the Community Guidelines before your first post.</p>
+                </div>
+            </article>
+
+            <article class="ann-item">
+                <div class="ann-date"><span class="d">12</span><span class="m">OCT</span></div>
+                <div class="ann-body">
+                    <h3>Got an equipment problem? Just post it</h3>
+                    <p>Post machining, failure or process questions directly in the relevant board — practicing engineers answer in the comments.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ============ Value Cards ============ -->
+    <section class="section container" aria-label="Member benefits">
+        <div class="section-head">
+            <h2>Why join the network</h2>
+            <p>Built for real engineering work — not another noisy social feed.</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="icon-chip" aria-hidden="true">📚</div>
+                <h3>Practical Technical Knowledge</h3>
+                <p>Equipment selection, machining processes, and troubleshooting — real&#8209;world experience from working engineers, not textbook theory.</p>
+            </div>
+            <div class="value-card">
+                <div class="icon-chip" aria-hidden="true">🚀</div>
+                <h3>Industry Exposure</h3>
+                <p>Get your technical capabilities and products discovered by precision buyers — trust and traffic built on professional content.</p>
+            </div>
+            <div class="value-card">
+                <div class="icon-chip" aria-hidden="true">🌐</div>
+                <h3>Supply&#8209;Demand Matching</h3>
+                <p>From technical questions to business connections — every engineering discussion can become a collaboration.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============ Inside Community（冷启动预告模块） ============ -->
+    <section class="section container" aria-labelledby="inside-title">
+        <div class="inside-panel">
+            <h2 id="inside-title">What you can do inside the community</h2>
+            <p class="panel-sub">Everything is built around real technical value from day one.</p>
+            <div class="inside-grid">
+                <p class="inside-item"><span class="tick">✓</span> Discuss machining, equipment failure and process problems with practicing engineers</p>
+                <p class="inside-item"><span class="tick">✓</span> Read technical articles, case studies and product insights published by manufacturers</p>
+                <p class="inside-item"><span class="tick">✓</span> Manufacturers can publish technical &amp; product write-ups in any machinery board</p>
+                <p class="inside-item"><span class="tick">✓</span> Raise questions, share solutions and build industry connections</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- ============ Footer（极简） ============ -->
+<footer>
+    <div class="footer-inner">
+        <div class="f-brand">tb<span class="hl">voh</span> · The Machinery Knowledge Network</div>
+        <div class="f-legal">
+            <span>© 2026 All Rights Reserved</span>
+            <span class="sep">|</span>
+            <a href="/privacy">Privacy Policy</a>
+            <span class="sep">|</span>
+            <a href="/community-guidelines">Community Guidelines</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    /* 顶部紧急公告条：关闭后按 data-key 记住 7 天，
+       换一条公告时把 data-key 改成新的日期/编号，会重新对所有人生效。 */
+    (function () {
+        var strip = document.getElementById('annStrip');
+        if (!strip) return;
+        var closed = localStorage.getItem('annClosed:' + strip.getAttribute('data-key'));
+        if (closed) { strip.hidden = true; return; }
+        var closeBtn = strip.querySelector('.close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', function () {
+                strip.hidden = true;
+                localStorage.setItem('annClosed:' + strip.getAttribute('data-key'), '1');
+            });
+        }
+    })();
+
+    /* 角色标签增强：选中后 Enter Community 附加 ?role= 参数。
+       纯增强——禁用 JS 时按钮默认跳转 /forum，功能不受影响。 */
+    (function () {
+        var tags = document.querySelectorAll('.role-tag');
+        var btn = document.getElementById('enterBtn');
+        tags.forEach(function (tag) {
+            tag.addEventListener('click', function () {
+                tags.forEach(function (t) { t.classList.remove('active'); });
+                tag.classList.add('active');
+                btn.setAttribute('href', 'https://www.tbvoh.com/forum?role=' + tag.getAttribute('data-role'));
+            });
+        });
+    })();
+</script>
+
 </body>
 </html>
